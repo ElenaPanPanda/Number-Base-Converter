@@ -7,6 +7,10 @@ android {
     namespace = "com.example.numberbaseconverter"
     compileSdk = 34
 
+    buildFeatures {
+        viewBinding = true
+    }
+
     defaultConfig {
         applicationId = "com.example.numberbaseconverter"
         minSdk = 26
