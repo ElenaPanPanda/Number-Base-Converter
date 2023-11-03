@@ -4,4 +4,6 @@
     <string name="default_target_base">2</string>
     <string name="number_to_convert">Number to convert</string>
     <string name="calculate">calculate</string>
+    <string name="target_base">Target Base</string>
+    <string name="start_base">Start Base</string>
 </resources>

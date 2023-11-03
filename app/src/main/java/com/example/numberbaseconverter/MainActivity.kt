@@ -3,7 +3,10 @@ package com.example.numberbaseconverter
 import android.R
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import com.example.numberbaseconverter.databinding.ActivityMainBinding
 import java.math.BigDecimal
 import java.math.BigInteger
@@ -27,14 +30,22 @@ class MainActivity : AppCompatActivity() {
             binding.startBaseSpinner.adapter = adapter
         }
 
+        ArrayAdapter(
+            this,
+            R.layout.simple_spinner_item,
+            createListOfBases()
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.targetBaseSpinner.adapter = adapter
+        }
 
         binding.startNumber.setOnClickListener{
             binding.finalNumber.text = ""
         }
 
         binding.calculateButton.setOnClickListener {
-            val startBase = binding.startBaseText.text.toString().toBigInteger()
-            val targetBase = binding.targetBaseText.text.toString().toBigInteger()
+            val startBase = binding.startBaseSpinner.selectedItem.toString().toBigInteger()
+            val targetBase = binding.targetBaseSpinner.selectedItem.toString().toBigInteger()
             val startNumber = binding.startNumber.text.toString()
 
             binding.finalNumber.text = doConversion(startBase, targetBase, startNumber)
