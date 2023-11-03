@@ -1,7 +1,9 @@
 package com.example.numberbaseconverter
 
+import android.R
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import com.example.numberbaseconverter.databinding.ActivityMainBinding
 import java.math.BigDecimal
 import java.math.BigInteger
@@ -16,6 +18,20 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        ArrayAdapter(
+            this,
+            R.layout.simple_spinner_item,
+            createListOfBases()
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.startBaseSpinner.adapter = adapter
+        }
+
+
+        binding.startNumber.setOnClickListener{
+            binding.finalNumber.text = ""
+        }
+
         binding.calculateButton.setOnClickListener {
             val startBase = binding.startBaseText.text.toString().toBigInteger()
             val targetBase = binding.targetBaseText.text.toString().toBigInteger()
@@ -24,6 +40,14 @@ class MainActivity : AppCompatActivity() {
             binding.finalNumber.text = doConversion(startBase, targetBase, startNumber)
         }
     }
+}
+
+fun createListOfBases(): List<BigInteger> {
+    val listOfBases = mutableListOf<BigInteger>()
+    for (n in 2..36) {
+        listOfBases += n.toBigInteger()
+    }
+    return listOfBases.toList()
 }
 
 fun doConversion(startBase: BigInteger, targetBase: BigInteger, startNumber: String): String {
@@ -61,7 +85,6 @@ fun isFractionalNumber(number: String): Boolean {
 
 fun commonConversionToDecimal(sourceNumber: String, sourceBase: BigInteger): BigInteger {
     var dec = BigInteger("0")
-    //val one = BigInteger("1")
     for (index in sourceNumber.indices) {
         val symbol = sourceNumber[index].uppercase()
         val n = AllNumbers.indexOf(symbol)
@@ -118,3 +141,4 @@ fun commonConversionReminderFromDecimal(number: BigDecimal, targetBase: BigDecim
 
     return getReminderPartOfNumber(reminderTarget)
 }
+
