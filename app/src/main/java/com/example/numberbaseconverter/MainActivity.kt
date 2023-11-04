@@ -28,6 +28,9 @@ class MainActivity : AppCompatActivity() {
         ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.startBaseSpinner.adapter = adapter
+            val selection = 10
+            val spinnerPosition: Int = adapter.getPosition(selection.toBigInteger())
+            binding.startBaseSpinner.setSelection(spinnerPosition)
         }
 
         ArrayAdapter(
@@ -42,6 +45,12 @@ class MainActivity : AppCompatActivity() {
         binding.startNumber.setOnClickListener{
             binding.finalNumber.text = ""
         }
+
+       /* binding.swap.setOnClickListener{
+            val startBaseBefore = binding.startBaseSpinner.selectedItem
+            val targetBaseBefore = binding.targetBaseSpinner.selectedItem
+            val spinnerPositionStartBBase =
+        }*/
 
         binding.calculateButton.setOnClickListener {
             val startBase = binding.startBaseSpinner.selectedItem.toString().toBigInteger()
