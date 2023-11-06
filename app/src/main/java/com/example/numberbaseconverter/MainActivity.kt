@@ -3,16 +3,58 @@ package com.example.numberbaseconverter
 import android.R
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import com.example.numberbaseconverter.databinding.ActivityMainBinding
 import java.math.BigDecimal
 import java.math.BigInteger
 import java.math.RoundingMode
 
 const val AllNumbers = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+class Bases() {
+    fun createListOfBases(): List<BigInteger> {
+        val listOfBases = mutableListOf<BigInteger>()
+        for (n in 2..36) {
+            listOfBases += n.toBigInteger()
+        }
+        return listOfBases.toList()
+    }
+}
+
+class SymbolsOfNumber() {
+
+    fun getAllCorrectSymbols(): List<Char> {
+        val listSymbols = mutableListOf<Char>()
+
+        for (c in '0'..'9') listSymbols.add(c)
+        for (c in 'A'..'Z') listSymbols.add(c)
+        for (c in 'a'..'z') listSymbols.add(c)
+        listSymbols.add('.')
+
+        return listSymbols
+    }
+
+    fun getListNumbersInARow(): List<Char> {
+        val listNumbers = mutableListOf<Char>()
+
+        for (c in '0'..'9') listNumbers.add(c)
+        for (c in 'A'..'Z') listNumbers.add(c)
+
+        return listNumbers
+    }
+
+    fun getListOfSymbolsThisBase(base: Int): List<Char> {
+        val listNumbers = getListNumbersInARow()
+        val symbolsToBase = mutableListOf<Char>()
+
+        for (i in 0 until base) {
+            symbolsToBase.add(listNumbers[i])
+        }
+
+        return symbolsToBase
+    }
+}
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -21,10 +63,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val listOfBases = Bases().createListOfBases()
+
         ArrayAdapter(
             this,
             R.layout.simple_spinner_item,
-            createListOfBases()
+            listOfBases
         ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.startBaseSpinner.adapter = adapter
@@ -36,22 +80,33 @@ class MainActivity : AppCompatActivity() {
         ArrayAdapter(
             this,
             R.layout.simple_spinner_item,
-            createListOfBases()
+            listOfBases
         ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.targetBaseSpinner.adapter = adapter
         }
 
-        binding.startNumber.setOnClickListener{
+        binding.startNumber.setOnClickListener {
             binding.finalNumber.text = ""
         }
 
-        // проверка ввода числа: при неверном вводе должен выскакивать тост с сообщением об ошибке
-        // поле ввода подсвечиваться красным, не должен считаться результат
+        // final number disappear when start number is edited
 
-        // при пустом вводе не должен считаться результат
+        // add check first number: correct symbols, number of dots, correspond to base
 
-        binding.swap.setOnClickListener{
+        // change button and targetNumber in xml
+
+        // create pretty spinners
+
+        // change app icon
+
+        // change app theme
+
+        // add chose to upper or lower letters
+
+        // add share button
+
+        binding.swap.setOnClickListener {
             val positionStartBaseBefore = binding.startBaseSpinner.selectedItemPosition
             val positionTargetBaseBefore = binding.targetBaseSpinner.selectedItemPosition
             binding.startBaseSpinner.setSelection(positionTargetBaseBefore)
@@ -68,13 +123,6 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-fun createListOfBases(): List<BigInteger> {
-    val listOfBases = mutableListOf<BigInteger>()
-    for (n in 2..36) {
-        listOfBases += n.toBigInteger()
-    }
-    return listOfBases.toList()
-}
 
 fun doConversion(startBase: BigInteger, targetBase: BigInteger, startNumber: String): String {
     val firstPartOfNumber = getFirstPartOfNumber(startNumber)
@@ -97,9 +145,7 @@ fun doConversion(startBase: BigInteger, targetBase: BigInteger, startNumber: Str
     return targetNumber.lowercase()
 }
 
-fun getFirstPartOfNumber(number: String): String {
-    return number.split(".").first()
-}
+fun getFirstPartOfNumber(number: String): String = number.split(".").first()
 
 fun getReminderPartOfNumber(number: String): String {
     return number.split('.').last()
@@ -167,4 +213,58 @@ fun commonConversionReminderFromDecimal(number: BigDecimal, targetBase: BigDecim
 
     return getReminderPartOfNumber(reminderTarget)
 }
+
+fun checkStartNumber(number: String, base: Int, listOfBases: List<BigInteger>): Boolean {
+
+
+    if (!isAllSymbolsAreCorrect(number)) {
+        //show toast
+        //show validation
+        //return false
+    }
+
+    if (!isNullOrOneDots(number)) {
+        //show toast
+        //show validation
+        //return false
+    }
+
+    if (!isNumberCorrespondsBase(number, base, listOfBases)) {
+        //show toast
+        //show validation
+        //return false
+    }
+
+    return true
+}
+
+fun isAllSymbolsAreCorrect(number: String): Boolean {
+    val listOfCorrectSymbols = SymbolsOfNumber().getAllCorrectSymbols()
+
+    for (symbol in number) {
+        if (!listOfCorrectSymbols.contains(symbol)) return false
+    }
+
+    return true
+}
+
+fun isNullOrOneDots(number: String): Boolean {
+    val numberOfDots = number.count { it == '.' }
+    if (numberOfDots == 0 || numberOfDots == 1) return true
+
+    return false
+}
+
+fun isNumberCorrespondsBase(number: String, base: Int, listOfBases: List<BigInteger>): Boolean {
+    val listCorrectSymbolsThisBase = SymbolsOfNumber().getListOfSymbolsThisBase(base)
+
+    for (symbol in number) {
+        if (symbol != '.') {
+            if (!listCorrectSymbolsThisBase.contains(symbol.uppercaseChar())) return false
+        }
+    }
+
+    return true
+}
+
 
