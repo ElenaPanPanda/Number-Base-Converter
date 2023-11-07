@@ -1,6 +1,5 @@
 package com.example.numberbaseconverter
 
-import android.R
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -74,10 +73,10 @@ class MainActivity : AppCompatActivity() {
 
         ArrayAdapter(
             this,
-            R.layout.simple_spinner_item,
+            R.layout.spinner_item,
             listOfBases
         ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            adapter.setDropDownViewResource(R.layout.spinner_item)
             binding.startBaseSpinner.adapter = adapter
             val selection = 10
             val spinnerPosition: Int = adapter.getPosition(selection.toBigInteger())
@@ -86,7 +85,7 @@ class MainActivity : AppCompatActivity() {
 
         ArrayAdapter(
             this,
-            R.layout.simple_spinner_item,
+            R.layout.spinner_item,
             listOfBases
         ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
