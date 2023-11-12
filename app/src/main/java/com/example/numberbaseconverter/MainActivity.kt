@@ -49,6 +49,8 @@ class MainActivity : AppCompatActivity() {
         // проверка ввода числа: при неверном вводе должен выскакивать тост с сообщением об ошибке
         // поле ввода подсвечиваться красным, не должен считаться результат
 
+        // при пустом вводе не должен считаться результат
+
         binding.swap.setOnClickListener{
             val positionStartBaseBefore = binding.startBaseSpinner.selectedItemPosition
             val positionTargetBaseBefore = binding.targetBaseSpinner.selectedItemPosition
@@ -57,8 +59,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.calculateButton.setOnClickListener {
-            if (binding.startNumber.text != null) return@setOnClickListener
-
             val startBase = binding.startBaseSpinner.selectedItem.toString().toBigInteger()
             val targetBase = binding.targetBaseSpinner.selectedItem.toString().toBigInteger()
             val startNumber = binding.startNumber.text.toString()
