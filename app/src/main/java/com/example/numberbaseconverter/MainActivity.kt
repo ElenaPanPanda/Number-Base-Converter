@@ -1,5 +1,6 @@
 package com.example.numberbaseconverter
 
+import android.R
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -73,34 +74,24 @@ class MainActivity : AppCompatActivity() {
 
         ArrayAdapter(
             this,
-            android.R.layout.simple_spinner_item,
+            R.layout.simple_spinner_item,
             listOfBases
         ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
             binding.startBaseSpinner.adapter = adapter
-            /*val selection = 10
+            val selection = 10
             val spinnerPosition: Int = adapter.getPosition(selection.toBigInteger())
-            binding.startBaseSpinner.setSelection(spinnerPosition)*/
+            binding.startBaseSpinner.setSelection(spinnerPosition)
         }
 
         ArrayAdapter(
             this,
-            android.R.layout.simple_spinner_item,
+            R.layout.simple_spinner_item,
             listOfBases
         ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
             binding.targetBaseSpinner.adapter = adapter
         }
-
-        // create pretty spinners
-
-        // change app icon
-
-        // change app theme
-
-        // add chose to upper or .
-
-        // add share button
 
         binding.swap.setOnClickListener {
             val positionStartBaseBefore = binding.startBaseSpinner.selectedItemPosition

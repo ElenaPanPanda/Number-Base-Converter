@@ -1,7 +1,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.NumberBaseConverter" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/blue_1</item>
+        <item name="colorPrimaryVariant">@color/blue_2</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/red_2</item>
+        <item name="colorSecondaryVariant">@color/red_1</item>
+        <item name="colorOnSecondary">@color/black</item>
     </style>
 </resources>
