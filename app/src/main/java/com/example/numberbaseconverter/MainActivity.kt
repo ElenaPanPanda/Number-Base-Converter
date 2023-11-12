@@ -73,19 +73,19 @@ class MainActivity : AppCompatActivity() {
 
         ArrayAdapter(
             this,
-            R.layout.spinner_item,
+            android.R.layout.simple_spinner_item,
             listOfBases
         ).also { adapter ->
-            adapter.setDropDownViewResource(R.layout.spinner_item)
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.startBaseSpinner.adapter = adapter
-            val selection = 10
+            /*val selection = 10
             val spinnerPosition: Int = adapter.getPosition(selection.toBigInteger())
-            binding.startBaseSpinner.setSelection(spinnerPosition)
+            binding.startBaseSpinner.setSelection(spinnerPosition)*/
         }
 
         ArrayAdapter(
             this,
-            R.layout.spinner_item,
+            android.R.layout.simple_spinner_item,
             listOfBases
         ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
