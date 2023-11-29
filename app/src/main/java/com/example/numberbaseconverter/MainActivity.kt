@@ -2,6 +2,7 @@ package com.example.numberbaseconverter
 
 import android.R
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
@@ -106,11 +107,15 @@ class MainActivity : AppCompatActivity() {
             val startNumber = binding.startNumberEditText.text.toString()
 
             if (checkStartNumber(startNumber, startBase.toInt())) {
+                binding.startNumberTextField.error = null
                 binding.finalNumber.text = doConversion(startBase, targetBase, startNumber)
             }
         }
-    }
 
+        binding.shareButton.setOnClickListener {
+            onShareButton()
+        }
+    }
 
     private fun doConversion(startBase: BigInteger, targetBase: BigInteger, startNumber: String): String {
         val firstPartOfNumber = getFirstPartOfNumber(startNumber)
@@ -266,4 +271,24 @@ class MainActivity : AppCompatActivity() {
         }
         return true
     }
+
+    private fun onShareButton () {
+        if (binding.finalNumber.text != null) {
+            val text = binding.finalNumber.text.toString()
+            val intent = Intent()
+            intent.action = Intent.ACTION_SEND
+            intent.type = "text/plain"
+            intent.putExtra(Intent.EXTRA_TEXT, text)
+            startActivity(Intent.createChooser(intent,"Share via"))
+        }
+    }
 }
+
+// bag 1
+// ввести число не соответствующее base
+// нажать calculate
+// отображается "Number does not correspond to start base"
+// изменить base не изменяя число
+// нажать calculate
+// считается результат
+// сообщение об ошибке должно пропасть
