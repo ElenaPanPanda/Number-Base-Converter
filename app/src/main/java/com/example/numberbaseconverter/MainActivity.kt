@@ -1,12 +1,15 @@
 package com.example.numberbaseconverter
 
-import android.R
 import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.Menu
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import com.example.numberbaseconverter.databinding.ActivityMainBinding
 import java.math.BigDecimal
 import java.math.BigInteger
@@ -68,17 +71,30 @@ class MainActivity : AppCompatActivity() {
 
         val listOfBases = Bases().createListOfBases()
 
-        binding.startNumberEditText.setOnClickListener {
+        /*binding.startNumberEditText.setOnClickListener {
             binding.finalNumber.text = ""
             binding.startNumberTextField.error = null
-        }
+        }*/
+
+        binding.startNumberEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                binding.finalNumber.text = ""
+                binding.startNumberTextField.error = null
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+        })
 
         ArrayAdapter(
             this,
-            R.layout.simple_spinner_item,
+            android.R.layout.simple_spinner_item,
             listOfBases
         ).also { adapter ->
-            adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.startBaseSpinner.adapter = adapter
             val selection = 10
             val spinnerPosition: Int = adapter.getPosition(selection.toBigInteger())
@@ -87,10 +103,10 @@ class MainActivity : AppCompatActivity() {
 
         ArrayAdapter(
             this,
-            R.layout.simple_spinner_item,
+            android.R.layout.simple_spinner_item,
             listOfBases
         ).also { adapter ->
-            adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.targetBaseSpinner.adapter = adapter
         }
 
@@ -117,7 +133,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun doConversion(startBase: BigInteger, targetBase: BigInteger, startNumber: String): String {
+    private fun doConversion(
+        startBase: BigInteger,
+        targetBase: BigInteger,
+        startNumber: String
+    ): String {
         val firstPartOfNumber = getFirstPartOfNumber(startNumber)
         val decimalResultFirstPart =
             commonConversionToDecimal(firstPartOfNumber.uppercase(), startBase)
@@ -152,7 +172,10 @@ class MainActivity : AppCompatActivity() {
         return number.contains('.')
     }
 
-    private fun commonConversionToDecimal(sourceNumber: String, sourceBase: BigInteger): BigInteger {
+    private fun commonConversionToDecimal(
+        sourceNumber: String,
+        sourceBase: BigInteger
+    ): BigInteger {
         var dec = BigInteger("0")
         for (index in sourceNumber.indices) {
             val symbol = sourceNumber[index].uppercase()
@@ -179,7 +202,10 @@ class MainActivity : AppCompatActivity() {
         return targetNumber.reversed()
     }
 
-    private fun commonConversionReminderToDecimal(number: String, sourceBase: BigDecimal): BigDecimal {
+    private fun commonConversionReminderToDecimal(
+        number: String,
+        sourceBase: BigDecimal
+    ): BigDecimal {
         var dec = BigDecimal.ZERO
         val one = BigDecimal(1.0)
         val sourceReminderPart = getReminderPartOfNumber(number)
@@ -195,7 +221,10 @@ class MainActivity : AppCompatActivity() {
         return dec.divide(BigDecimal.ONE, 5, RoundingMode.HALF_UP)
     }
 
-    private fun commonConversionReminderFromDecimal(number: BigDecimal, targetBase: BigDecimal): String {
+    private fun commonConversionReminderFromDecimal(
+        number: BigDecimal,
+        targetBase: BigDecimal
+    ): String {
         val intNumber = number.toInt()
         var reminderDec = number - intNumber.toBigDecimal()
         var reminderTarget = "0."
@@ -234,7 +263,7 @@ class MainActivity : AppCompatActivity() {
             return false
         }
 
-        if (number == ""){
+        if (number == "") {
             val text = "Number to convert is empty"
             Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
             binding.startNumberTextField.error = text
@@ -272,23 +301,24 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    private fun onShareButton () {
+    private fun onShareButton() {
         if (binding.finalNumber.text != null) {
             val text = binding.finalNumber.text.toString()
             val intent = Intent()
             intent.action = Intent.ACTION_SEND
-            intent.type = "text/plain"
+            intent.type = "text"
             intent.putExtra(Intent.EXTRA_TEXT, text)
-            startActivity(Intent.createChooser(intent,"Share via"))
+            startActivity(Intent.createChooser(intent, "Share via"))
         }
     }
-}
 
-// bag 1
-// ввести число не соответствующее base
-// нажать calculate
-// отображается "Number does not correspond to start base"
-// изменить base не изменяя число
-// нажать calculate
-// считается результат
-// сообщение об ошибке должно пропасть
+    /*override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu., menu)
+
+        val layoutButton = menu?.findItem(R.id.action_switch_layout)
+        // Calls code to set the icon based on the LinearLayoutManager of the RecyclerView
+        setIcon(layoutButton)
+
+        return true
+    }*/
+}

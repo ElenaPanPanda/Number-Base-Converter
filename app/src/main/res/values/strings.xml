@@ -7,4 +7,7 @@
     <string name="target_base">Target Base</string>
     <string name="start_base">Start Base</string>
     <string name="Share">Share</string>
+    <string name="info">info</string>
+    <string name="info_text">You can use 0-9 and a-b symbols. I am not case sensitive.
+    I can count fractional numbers if you use dot symbol.</string>
 </resources>
