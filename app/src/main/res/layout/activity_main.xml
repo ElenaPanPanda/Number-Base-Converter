@@ -28,7 +28,7 @@
         android:paddingTop="18dp"
         android:hint="@string/number_to_convert"
         app:errorEnabled="true"
-        app:layout_constraintEnd_toStartOf="@id/info_icon"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/app_name">
 
@@ -40,14 +40,14 @@
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <ImageView
+<!--    <ImageView
         android:id="@+id/info_icon"
         android:layout_width="30dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="@id/start_number_text_field"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/start_number_text_field"
-        app:srcCompat="@drawable/ic_info" />
+        app:srcCompat="@drawable/ic_info" />-->
 
 
     <TextView
@@ -117,11 +117,11 @@
         android:layout_marginTop="45dp"
         android:text="@string/Calculate"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@id/share_button"
-        app:layout_constraintStart_toStartOf="@id/share_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/final_number" />
 
-    <Button
+<!--    <Button
         android:id="@+id/share_button"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
@@ -130,6 +130,6 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/calculate_button" />
+        app:layout_constraintTop_toBottomOf="@id/calculate_button" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -128,9 +128,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        binding.shareButton.setOnClickListener {
+        /*binding.shareButton.setOnClickListener {
             onShareButton()
-        }
+        }*/
     }
 
     private fun doConversion(
